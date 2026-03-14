@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ízőrző – Receptgyűjtő</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           CSS VÁLTOZÓK (variables)
+           ============================================ */
+        :root {
+            --bg: #f8f8f6;
+            --bg-card: #ffffff;
+            --bg-form: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #5c5c5c;
+            --text-tertiary: #999999;
+            --accent: #1a1a1a;
+            --accent-hover: #333333;
+            --border: #e5e5e5;
+            --border-focus: #1a1a1a;
+            --success: #2d6a4f;
+            --error: #d32f2f;
+            --error-bg: #fef2f2;
+            --tag-green-bg: #ecfdf5;
+            --tag-green-text: #065f46;
+            --tag-amber-bg: #fffbeb;
+            --tag-amber-text: #92400e;
+            --tag-red-bg: #fef2f2;
+            --tag-red-text: #991b1b;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+            --radius: 8px;
+            --radius-lg: 12px;
+            --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-serif: 'DM Serif Display', Georgia, serif;
+        }
+
+        /* ============================================
+           ALAP STÍLUSOK
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============================================
+           FEJLÉC (Header)
+           ============================================ */
+        header {
+            padding: 40px 32px 0;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.75rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .logo span {
+            color: var(--text-tertiary);
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        /* ============================================
+           FŐ ELRENDEZÉS (Layout)
+           ============================================ */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 24px 16px;
+                gap: 32px;
+            }
+            header { padding: 24px 16px 0; }
+        }
+
+        /* ============================================
+           ŰRLAP SZEKCIÓ (Form)
+           ============================================ */
+        .form-section {
+            background: var(--bg-form);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            border: 1px solid var(--border);
+            position: sticky;
+            top: 24px;
+        }
+
+        .form-title {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Input mezők stílusa */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-family: var(--font-sans);
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            background: var(--bg);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.08);
+            background: #fff;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 72px;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            padding-right: 36px;
+        }
+
+        /* Validációs hibaüzenetek */
+        .error-message {
+            color: var(--error);
+            font-size: 0.75rem;
+            margin-top: 4px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .error-message.visible {
+            display: block;
+        }
+
+        .form-group.has-error input,
+        .form-group.has-error select,
+        .form-group.has-error textarea {
+            border-color: var(--error);
+            background: var(--error-bg);
+        }
+
+        /* Gomb stílus */
+        .btn-submit {
+            width: 100%;
+            padding: 11px 16px;
+            background: var(--accent);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius);
+            font-family: var(--font-sans);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-submit:hover {
+            background: var(--accent-hover);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-submit:active {
+            transform: scale(0.99);
+        }
+
+        /* ============================================
+           RECEPTEK SZEKCIÓ (Cards)
+           ============================================ */
+        .recipes-section {
+            min-height: 400px;
+        }
+
+        .recipes-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 20px;
+        }
+
+        .recipes-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--text-primary);
+        }
+
+        .recipe-count {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        /* Szűrő gombok */
+        .filter-bar {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            color: #ffffff;
+            border-color: var(--accent);
+        }
+
+        /* Recept kártyák */
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .recipe-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: box-shadow 0.25s, transform 0.25s;
+            animation: cardAppear 0.35s ease-out;
+        }
+
+        .recipe-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-image-placeholder {
+            width: 100%;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            color: var(--text-tertiary);
+            font-size: 2.5rem;
+        }
+
+        .card-body {
+            padding: 16px 18px 18px;
+        }
+
+        .card-category {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--text-tertiary);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .card-title {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .card-ingredients {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            line-height: 1.55;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+        }
+
+        .card-time {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        .card-difficulty {
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 100px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .difficulty-konnyu {
+            background: var(--tag-green-bg);
+            color: var(--tag-green-text);
+        }
+
+        .difficulty-kozepes {
+            background: var(--tag-amber-bg);
+            color: var(--tag-amber-text);
+        }
+
+        .difficulty-nehez {
+            background: var(--tag-red-bg);
+            color: var(--tag-red-text);
+        }
+
+        /* Törlés gomb */
+        .card-delete {
+            float: right;
+            background: none;
+            border: none;
+            color: var(--text-tertiary);
+            font-size: 0.95rem;
+            cursor: pointer;
+            padding: 0 0 0 8px;
+            transition: color 0.15s;
+            line-height: 1;
+        }
+
+        .card-delete:hover {
+            color: var(--error);
+        }
+
+        /* Üres állapot */
+        .empty-state {
+            text-align: center;
+            padding: 64px 24px;
+            color: var(--text-tertiary);
+            grid-column: 1 / -1;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+            opacity: 0.4;
+        }
+
+        .empty-state h3 {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .empty-state p {
+            font-size: 0.85rem;
+        }
+
+        /* Sikeres hozzáadás visszajelzés */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--success);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         FEJLÉC
+         ============================================ -->
+    <header>
+        <h1 class="logo">Ízőrző<span> / receptek</span></h1>
+        <p class="subtitle">Receptgyűjtő alkalmazás</p>
+    </header>
+
+    <!-- ============================================
+         FŐ TARTALOM
+         ============================================ -->
+    <div class="container">
+
+        <!-- ŰRLAP RÉSZ -->
+        <aside class="form-section">
+            <h2 class="form-title">Új recept hozzáadása</h2>
+
+            <form id="recipe-form" novalidate>
+                <!-- Recept neve -->
+                <div class="form-group">
+                    <label for="recipeName">Recept neve</label>
+                    <input type="text" id="recipeName" placeholder="pl. Túrós csusza">
+                    <p class="error-message" id="error-name">Add meg a recept nevét! (min. 3 karakter)</p>
+                </div>
+
+                <!-- Hozzávalók -->
+                <div class="form-group">
+                    <label for="recipeIngredients">Hozzávalók</label>
+                    <textarea id="recipeIngredients" placeholder="pl. túró, tészta, tejföl, szalonna"></textarea>
+                    <p class="error-message" id="error-ingredients">Sorold fel a hozzávalókat! (min. 5 karakter)</p>
+                </div>
+
+                <!-- Elkészítési idő -->
+                <div class="form-group">
+                    <label for="recipeTime">Elkészítési idő (perc)</label>
+                    <input type="number" id="recipeTime" placeholder="pl. 45" min="1">
+                    <p class="error-message" id="error-time">Adj meg érvényes időt! (1–600 perc)</p>
+                </div>
+
+                <!-- Nehézség -->
+                <div class="form-group">
+                    <label for="recipeDifficulty">Nehézség</label>
+                    <select id="recipeDifficulty">
+                        <option value="">Válassz...</option>
+                        <option value="Könnyű">Könnyű</option>
+                        <option value="Közepes">Közepes</option>
+                        <option value="Nehéz">Nehéz</option>
+                    </select>
+                    <p class="error-message" id="error-difficulty">Válaszd ki a nehézséget!</p>
+                </div>
+
+                <!-- Kategória -->
+                <div class="form-group">
+                    <label for="recipeCategory">Kategória</label>
+                    <select id="recipeCategory">
+                        <option value="">Válassz...</option>
+                        <option value="Leves">Leves</option>
+                        <option value="Főétel">Főétel</option>
+                        <option value="Desszert">Desszert</option>
+                        <option value="Saláta">Saláta</option>
+                        <option value="Reggeli">Reggeli</option>
+                    </select>
+                    <p class="error-message" id="error-category">Válaszd ki a kategóriát!</p>
+                </div>
+
+                <!-- Kép URL -->
+                <div class="form-group">
+                    <label for="recipeImage">Kép URL (opcionális)</label>
+                    <input type="text" id="recipeImage" placeholder="https://example.com/kep.jpg">
+                </div>
+
+                <button type="button" id="btn-add-recipe" class="btn-submit">Recept hozzáadása</button>
+            </form>
+        </aside>
+
+        <!-- RECEPTEK RÉSZ -->
+        <main class="recipes-section">
+            <div class="recipes-header">
+                <h2 class="recipes-title">Receptjeim</h2>
+                <span class="recipe-count" id="recipe-count">0 recept</span>
+            </div>
+
+            <!-- Szűrő gombok -->
+            <div class="filter-bar" id="filter-bar">
+                <button class="filter-btn active" data-filter="Összes">Összes</button>
+                <button class="filter-btn" data-filter="Leves">Leves</button>
+                <button class="filter-btn" data-filter="Főétel">Főétel</button>
+                <button class="filter-btn" data-filter="Desszert">Desszert</button>
+                <button class="filter-btn" data-filter="Saláta">Saláta</button>
+                <button class="filter-btn" data-filter="Reggeli">Reggeli</button>
+            </div>
+
+            <!-- Receptek megjelenítési terület -->
+            <div class="recipes-grid" id="recipes-grid">
+                <!-- IDE KERÜLNEK A KÁRTYÁK JAVASCRIPT-TEL -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Visszajelzés toast -->
+    <div class="toast" id="toast">Recept sikeresen hozzáadva</div>
+
+
+    <!-- ============================================
+         JAVASCRIPT
+         ============================================ -->
+    <script>
+        // =============================================
+        // DOMContentLoaded ESEMÉNY
+        // MINDEN kód ide kerül, hogy biztosan
+        // betöltődött legyen a HTML mielőtt futunk
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Az oldal betöltődött!');
+
+
+            // =============================================
+            // TÖMB – itt tároljuk a recept OBJEKTUMOKAT
+            // =============================================
+            let receptek = [];
+
+            // Aktuális szűrő
+            let aktualisSzuro = 'Összes';
+
+
+            // =============================================
+            // Előre definiált példa receptek (OBJEKTUMOK TÖMBJE)
+            // =============================================
+            const peldarReceptek = [
+                {
+                    nev: 'Gulyásleves',
+                    hozzavalok: 'marha hús, burgonya, sárgarépa, hagyma, paprika, csipetke',
+                    ido: 90,
+                    nehezseg: 'Közepes',
+                    kategoria: 'Leves',
+                    kepUrl: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600'
+                },
+                {
+                    nev: 'Palacsinta',
+                    hozzavalok: 'liszt, tojás, tej, cukor, só, olaj',
+                    ido: 30,
+                    nehezseg: 'Könnyű',
+                    kategoria: 'Desszert',
+                    kepUrl: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600'
+                },
+                {
+                    nev: 'Görög saláta',
+                    hozzavalok: 'paradicsom, uborka, feta sajt, olívabogyó, hagyma, olívaolaj',
+                    ido: 15,
+                    nehezseg: 'Könnyű',
+                    kategoria: 'Saláta',
+                    kepUrl: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600'
+                }
+            ];
+
+            // Példa receptek hozzáadása a TÖMB-höz
+            peldarReceptek.forEach(function(recept) {
+                receptek.push(recept);
+            });
+
+            // Kártyák megjelenítése
+            receptekMegjelenitese();
+
+            // Szűrő gombok eseménykezelőinek beállítása
+            szuroGombokBeallitasa();
+
+
+            // =============================================
+            // CLICK EVENT – Hozzáadás gomb
+            // =============================================
+            const hozzadasGomb = document.querySelector('#btn-add-recipe');
+            hozzadasGomb.addEventListener('click', function() {
+
+                // Validáljuk az űrlapot
+                if (!validateForm()) {
+                    return; // Ha hibás, nem megyünk tovább
+                }
+
+                // Új recept OBJEKTUM létrehozása az input mezők értékéből
+                const ujRecept = {
+                    nev: document.querySelector('#recipeName').value.trim(),
+                    hozzavalok: document.querySelector('#recipeIngredients').value.trim(),
+                    ido: Number(document.querySelector('#recipeTime').value),
+                    nehezseg: document.querySelector('#recipeDifficulty').value,
+                    kategoria: document.querySelector('#recipeCategory').value,
+                    kepUrl: document.querySelector('#recipeImage').value.trim()
+                };
+
+                // Hozzáadjuk a TÖMB-höz
+                receptek.push(ujRecept);
+
+                // Újra rendereljük a kártyákat
+                receptekMegjelenitese();
+
+                // Űrlap mezők törlése egyesével
+                document.querySelector('#recipeName').value = '';
+                document.querySelector('#recipeIngredients').value = '';
+                document.querySelector('#recipeTime').value = '';
+                document.querySelector('#recipeDifficulty').value = '';
+                document.querySelector('#recipeCategory').value = '';
+                document.querySelector('#recipeImage').value = '';
+
+                // Visszajelzés megjelenítése
+                showToast();
+            });
+
+
+            // =============================================
+            // ŰRLAP VALIDÁLÁS (regex nélkül!)
+            // =============================================
+            function validateForm() {
+                // querySelector – elemek kiválasztása
+                const nev = document.querySelector('#recipeName');
+                const hozzavalok = document.querySelector('#recipeIngredients');
+                const ido = document.querySelector('#recipeTime');
+                const nehezseg = document.querySelector('#recipeDifficulty');
+                const kategoria = document.querySelector('#recipeCategory');
+
+                let isValid = true;
+
+                // --- Név validálás ---
+                // trim() eltávolítja a szóközöket, length ellenőrzi a hosszt
+                if (nev.value.trim().length < 3) {
+                    showError('error-name', nev);
+                    isValid = false;
+                } else {
+                    hideError('error-name', nev);
+                }
+
+                // --- Hozzávalók validálás ---
+                if (hozzavalok.value.trim().length < 5) {
+                    showError('error-ingredients', hozzavalok);
+                    isValid = false;
+                } else {
+                    hideError('error-ingredients', hozzavalok);
+                }
+
+                // --- Idő validálás (szám-e, és ésszerű tartományban van-e) ---
+                const idoErtek = Number(ido.value);
+                if (ido.value.trim() === '' || isNaN(idoErtek) || idoErtek < 1 || idoErtek > 600) {
+                    showError('error-time', ido);
+                    isValid = false;
+                } else {
+                    hideError('error-time', ido);
+                }
+
+                // --- Nehézség validálás (ki van-e választva) ---
+                if (nehezseg.value === '') {
+                    showError('error-difficulty', nehezseg);
+                    isValid = false;
+                } else {
+                    hideError('error-difficulty', nehezseg);
+                }
+
+                // --- Kategória validálás ---
+                if (kategoria.value === '') {
+                    showError('error-category', kategoria);
+                    isValid = false;
+                } else {
+                    hideError('error-category', kategoria);
+                }
+
+                return isValid;
+            }
+
+            // Hibaüzenet megjelenítése
+            function showError(errorId, inputElement) {
+                document.querySelector('#' + errorId).classList.add('visible');
+                inputElement.closest('.form-group').classList.add('has-error');
+            }
+
+            // Hibaüzenet elrejtése
+            function hideError(errorId, inputElement) {
+                document.querySelector('#' + errorId).classList.remove('visible');
+                inputElement.closest('.form-group').classList.remove('has-error');
+            }
+
+
+            // =============================================
+            // RECEPTEK MEGJELENÍTÉSE – createElement
+            // =============================================
+            function receptekMegjelenitese() {
+                const grid = document.querySelector('#recipes-grid');
+
+                // Töröljük az eddigi tartalmat
+                grid.innerHTML = '';
+
+                // Szűrt receptek
+                const szurtReceptek = receptek.filter(function(recept) {
+                    if (aktualisSzuro === 'Összes') {
+                        return true;
+                    }
+                    return recept.kategoria === aktualisSzuro;
+                });
+
+                // Recept számláló frissítése
+                const countEl = document.querySelector('#recipe-count');
+                countEl.textContent = szurtReceptek.length + ' recept';
+
+                // Ha nincs recept, üres állapot megjelenítése
+                if (szurtReceptek.length === 0) {
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.classList.add('empty-state');
+                    emptyDiv.innerHTML = '<div class="empty-state-icon">🍽️</div>' +
+                        '<h3>Még nincsenek receptjeid</h3>' +
+                        '<p>Adj hozzá az első receptedet az űrlap segítségével!</p>';
+                    grid.appendChild(emptyDiv);
+                    return;
+                }
+
+                // Végigmegyünk a szűrt receptek TÖMB-jén
+                szurtReceptek.forEach(function(recept, index) {
+                    // === createElement – kártya létrehozása ===
+                    const kartya = document.createElement('div');
+                    kartya.classList.add('recipe-card');
+
+                    // --- Kép megjelenítés ---
+                    if (recept.kepUrl && recept.kepUrl.length > 0) {
+                        const kep = document.createElement('img');
+                        kep.classList.add('card-image');
+                        kep.src = recept.kepUrl;
+                        kep.alt = recept.nev;
+                        // Ha a kép nem tölthető be, placeholder-t mutatunk
+                        kep.onerror = function() {
+                            kep.style.display = 'none';
+                            const placeholder = document.createElement('div');
+                            placeholder.classList.add('card-image-placeholder');
+                            placeholder.textContent = '🍴';
+                            kartya.insertBefore(placeholder, kartya.firstChild);
+                        };
+                        kartya.appendChild(kep);
+                    } else {
+                        const placeholder = document.createElement('div');
+                        placeholder.classList.add('card-image-placeholder');
+                        placeholder.textContent = '🍴';
+                        kartya.appendChild(placeholder);
+                    }
+
+                    // --- Kártya tartalma ---
+                    const body = document.createElement('div');
+                    body.classList.add('card-body');
+
+                    // Kategória
+                    const kat = document.createElement('p');
+                    kat.classList.add('card-category');
+                    kat.textContent = recept.kategoria;
+                    body.appendChild(kat);
+
+                    // Cím + törlés gomb
+                    const cim = document.createElement('h3');
+                    cim.classList.add('card-title');
+                    cim.textContent = recept.nev;
+
+                    // CLICK EVENT – Törlés gomb
+                    const torlesGomb = document.createElement('button');
+                    torlesGomb.classList.add('card-delete');
+                    torlesGomb.textContent = '✕';
+                    torlesGomb.title = 'Recept törlése';
+                    torlesGomb.addEventListener('click', function() {
+                        // Megkeressük a recept indexét az eredeti tömbben
+                        const eredetiIndex = receptek.indexOf(recept);
+                        if (eredetiIndex > -1) {
+                            receptek.splice(eredetiIndex, 1);
+                        }
+                        receptekMegjelenitese();
+                    });
+
+                    cim.appendChild(torlesGomb);
+                    body.appendChild(cim);
+
+                    // Hozzávalók
+                    const hozzavalokElem = document.createElement('p');
+                    hozzavalokElem.classList.add('card-ingredients');
+                    hozzavalokElem.textContent = recept.hozzavalok;
+                    body.appendChild(hozzavalokElem);
+
+                    // Meta információk
+                    const meta = document.createElement('div');
+                    meta.classList.add('card-meta');
+
+                    const ido = document.createElement('span');
+                    ido.classList.add('card-time');
+                    ido.textContent = recept.ido + ' perc';
+                    meta.appendChild(ido);
+
+                    const nehezseg = document.createElement('span');
+                    nehezseg.classList.add('card-difficulty');
+                    // Nehézséghez megfelelő CSS osztály
+                    const nehezsegiClass = recept.nehezseg === 'Könnyű' ? 'difficulty-konnyu'
+                        : recept.nehezseg === 'Közepes' ? 'difficulty-kozepes'
+                        : 'difficulty-nehez';
+                    nehezseg.classList.add(nehezsegiClass);
+                    nehezseg.textContent = recept.nehezseg;
+                    meta.appendChild(nehezseg);
+
+                    body.appendChild(meta);
+                    kartya.appendChild(body);
+
+                    // Kártya hozzáadása a gridhez
+                    grid.appendChild(kartya);
+                });
+            }
+
+
+            // =============================================
+            // SZŰRŐ GOMBOK – CLICK EVENT + querySelector
+            // =============================================
+            function szuroGombokBeallitasa() {
+                // querySelectorAll – az összes szűrő gomb kiválasztása
+                const gombok = document.querySelectorAll('.filter-btn');
+
+                gombok.forEach(function(gomb) {
+                    gomb.addEventListener('click', function() {
+                        // Aktív osztály eltávolítása az összes gombról
+                        gombok.forEach(function(g) {
+                            g.classList.remove('active');
+                        });
+
+                        // Aktív osztály hozzáadása a kattintott gombhoz
+                        gomb.classList.add('active');
+
+                        // Szűrő frissítése a data-filter attribútumból
+                        aktualisSzuro = gomb.getAttribute('data-filter');
+
+                        // Receptek újrarajzolása
+                        receptekMegjelenitese();
+                    });
+                });
+            }
+
+
+            // =============================================
+            // TOAST VISSZAJELZÉS
+            // =============================================
+            function showToast() {
+                const toast = document.querySelector('#toast');
+                toast.classList.add('show');
+
+                // 2.5 másodperc után eltűnik
+                setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 2500);
+            }
+
+        }); // DOMContentLoaded VÉGE
+    </script>
+
+</body>
+</html>
